@@ -206,8 +206,8 @@ class AMICleaner(object):
                     mapping_list = mapping_value.split('.')
                     excluded_mapping_values = mapping_strategy.get("excluded")
 
+                    is_candidate = True
                     for value in mapping_list:
-                        is_candidate = True
                         if value in excluded_mapping_values:
                             is_candidate = False
                             break
