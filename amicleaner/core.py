@@ -203,11 +203,20 @@ class AMICleaner(object):
                     mapping_strategy.get("values")
                 )
                 if mapping_strategy.get("excluded"):
-                    for excluded_mapping_value in mapping_strategy.get("excluded"):
-                        if excluded_mapping_value not in mapping_value:
-                            mapping_list = candidates_map.get(mapping_value) or []
-                            mapping_list.append(ami)
-                            candidates_map[mapping_value] = mapping_list
+                    mapping_list = mapping_value.split('.')
+                    excluded_mapping_values = mapping_strategy.get("excluded")
+
+                    for value in mapping_list:
+                        is_candidate = True
+                        if value in excluded_mapping_values:
+                            is_candidate = False
+                            break
+
+                    if is_candidate:
+                        mapping_list = candidates_map.get(mapping_value) or []
+                        mapping_list.append(ami)
+                        candidates_map[mapping_value] = mapping_list
+
                 else:
                     mapping_list = candidates_map.get(mapping_value) or []
                     mapping_list.append(ami)
